@@ -1,0 +1,28 @@
+{
+  "name": "eureka-be-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node js",
+    "upload",
+    "download",
+    "file",
+    "multipart",
+    "rest api",
+    "express",
+    "multer"
+  ],
+  "author": "bezkoder",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "multer": "^1.4.2",
+    "mysql": "^2.18.1"
+  }
+}
