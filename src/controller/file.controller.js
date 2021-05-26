@@ -6,6 +6,7 @@ const connection = require('../config');
 const upload = async (req, res) => {
   try {
     await uploadFile(req, res);
+    console.log(req.file);
     var gambar = req.file.originalname
     if (req.file == undefined) {
       return res.status(400).send({ message: "Please upload a file!" });
@@ -100,6 +101,7 @@ const getSubKategori = (req, res) => {
 const download = (req, res) => {
   const fileName = req.params.name;
   const directoryPath = __basedir + "/resources/static/assets/uploads/";
+  console.log(res);
   res.download(directoryPath + fileName, fileName, (err) => {
     if (err) {
       res.status(500).send({
@@ -111,7 +113,7 @@ const download = (req, res) => {
 
 const deleteKategori = (req, res) => {
   return new Promise((resolve, reject) => {
-    connection.query("DELETE FROM kategori WHERE id='" + req.body.id + "'", (err, result) => {
+    connection.query("DELETE FROM kategori WHERE id=?", req.body.id, (err, result) => {
       if (!err) {
         res.send(result)
       } else {
@@ -122,9 +124,8 @@ const deleteKategori = (req, res) => {
 }
 
 const deleteSubKategori = (req, res) => {
-  console.log(req.body.id);
   return new Promise((resolve, reject) => {
-    connection.query("DELETE FROM subkategori WHERE id='" + req.body.id + "'", (err, result) => {
+    connection.query("DELETE FROM subkategori WHERE id=?", req.body.id, (err, result) => {
       if (!err) {
         res.send(result)
       } else {
@@ -135,9 +136,8 @@ const deleteSubKategori = (req, res) => {
 }
 
 const deleteSoalByKategori = (req, res) => {
-  console.log(req.body);
   return new Promise((resolve, reject) => {
-    connection.query("DELETE FROM soal WHERE kategori='" + req.body.id + "'", (err, result) => {
+    connection.query('DELETE FROM soal WHERE kategori=?', req.params.id, (err, result) => {
       if (!err) {
         res.send(result)
       } else {
@@ -148,7 +148,7 @@ const deleteSoalByKategori = (req, res) => {
 }
 const deleteSoalBySubKategori = (req, res) => {
   return new Promise((resolve, reject) => {
-    connection.query('DELETE FROM soal WHERE subkategori=?', req.body.id, (err, result) => {
+    connection.query('DELETE FROM soal WHERE subkategori=?', req.params.id, (err, result) => {
       if (!err) {
         res.send(result)
       } else {
@@ -159,7 +159,7 @@ const deleteSoalBySubKategori = (req, res) => {
 }
 const deleteSoal = (req, res) => {
   return new Promise((resolve, reject) => {
-    connection.query('DELETE FROM soal WHERE id=?', req.body.id, (err, result) => {
+    connection.query('DELETE FROM soal WHERE id=?', req.params.id, (err, result) => {
       if (!err) {
         res.send(result)
       } else {
